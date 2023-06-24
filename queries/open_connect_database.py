@@ -1,14 +1,15 @@
 import pymysql
-from dados_conection import DadosConexao
+from queries.dados_conection import DadosConexao
 
 
 class ConnectDatabase:
     @staticmethod
-    def connect_my_database():
+    def connect_my_database():#  -> Union[Connection[Cursor], Connection[Cursor]]:
         conexao = pymysql.connect(
             host=DadosConexao.HOST.value,
             user=DadosConexao.USER.value,
-            password=DadosConexao.password.value,
-            database=DadosConexao.database.value
+            password=DadosConexao.PASSWORD.value,
+            database=DadosConexao.DATABASE.value
         )
         return conexao
+
