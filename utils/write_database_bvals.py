@@ -1,9 +1,11 @@
 import pymysql
 
+
 conexao = pymysql.connect(
-    host='localhost',
-    user='mateus',
-    password='12345678',
+    host='172.22.0.3',  # Endereço IP do container Docker
+    port=3306,  # Porta mapeada para o contêiner
+    user='root',
+    password='1',
     database='data_vector'
 )
 
@@ -11,7 +13,7 @@ conexao = pymysql.connect(
 cursor = conexao.cursor()
 
 
-with open(f'../data_b_s/100206/bvals', 'r') as arquivo:
+with open(f'../data_b_s/10co0206/bvals', 'r') as arquivo:
 
     linhas = arquivo.readlines()
 
