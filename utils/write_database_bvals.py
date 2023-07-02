@@ -1,51 +1,54 @@
 import pymysql
-
+import os
 
 conexao = pymysql.connect(
-    host='172.22.0.3',  # Endereço IP do container Docker
-    port=3306,  # Porta mapeada para o contêiner
+    host='localhost',
+    port=3360,
     user='root',
-    password='1',
+    password='123',
     database='data_vector'
 )
 
 
 cursor = conexao.cursor()
 
+ids_bvecs = [int(x) for x in os.listdir("../data_b_s/")]
 
-with open(f'../data_b_s/10co0206/bvals', 'r') as arquivo:
+for id_bvecs in ids_bvecs:
+    with open(f'../data_b_s/{id_bvecs}/bvals', 'r') as arquivo:
 
-    linhas = arquivo.readlines()
+        linhas = arquivo.readlines()
 
-    line_magnitude = [x.replace("\n", "") for x in linhas[0].split(" ") if x != '']
+        line_magnitude = [x.replace("\n", "") for x in linhas[0].split(" ") if x != '']
 
 
-    # Iterar pelas linhas
-    for magnitude in line_magnitude:
+        # Iterar pelas linhas
+        for magnitude in line_magnitude:
 
-        # Extrair os valores de coordenadas x, y e z
-        try:
-            mag = float(magnitude)
+            # Extrair os valores de coordenadas x, y e z
+            try:
+                id = int(id_bvecs)
+                mag = float(magnitude)
 
-        except:
-            print(f"==={magnitude}")
+            except:
+                print(f"==={magnitude}")
 
-        # Montar o comando SQL de inserção
-        sql = "INSERT INTO magnitude (mag) VALUES (%s)"
+            # Montar o comando SQL de inserção
+            sql = "INSERT INTO magnitude (id, mag) VALUES (%s, %s)"
 
-        try:
-            # Executar o comando SQL para inserir os valores
-            cursor.execute(sql, mag)
+            try:
+                # Executar o comando SQL para inserir os valores
+                cursor.execute(sql, (id, mag))
 
-            # Confirmar a transação
-            conexao.commit()
+                # Confirmar a transação
+                conexao.commit()
 
-            print(f"values ({mag}) in database")
+                print(f"values ({mag}) in database")
 
-        except Exception as e:
-            # Reverter a transação em caso de erro
-            conexao.rollback()
-            print(f"Erro ao inserir os valores ({mag}): {str(e)}")
+            except Exception as e:
+                # Reverter a transação em caso de erro
+                conexao.rollback()
+                print(f"Erro ao inserir os valores ({mag}): {str(e)}")
 
 # Fechar o cursor e a conexão
 cursor.close()
