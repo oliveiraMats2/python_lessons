@@ -16,7 +16,6 @@ tensorflow
 pyyaml
 nibabel
 qtpy
-neuralprophet
 dvc
 torchvision
 scikit-learn
