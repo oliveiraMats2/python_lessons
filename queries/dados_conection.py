@@ -3,8 +3,8 @@ from enum import Enum
 
 class DadosConexao(Enum):
     HOST = 'localhost'
-    USER = 'mateus'
-    PASSWORD = '12345678'
+    USER = 'root'
+    PASSWORD = '123'
     DATABASE = 'data_vector'
 
 
