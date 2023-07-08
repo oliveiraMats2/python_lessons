@@ -3,7 +3,7 @@ import os
 
 conexao = pymysql.connect(
     host='localhost',
-    port=3360,
+    port=3307,
     user='root',
     password='123',
     database='data_vector'
